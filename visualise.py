@@ -20,8 +20,8 @@ DIS_EDGE    = (0.55, 0.55, 0.55, 0.10)
 
 def load(path: Path | None = None) -> dict:
     
-    # load genome JSON from disk, defaulting to best_genome.json in the project root
-    return json.loads((path or _ROOT / "best_genome.json").read_text())
+    # load genome JSON from disk, defaulting to best_genome.json in the web folder
+    return json.loads((path or _ROOT / "web" / "best_genome.json").read_text())
 
 
 def layout(nodes: list[dict]) -> dict[int, tuple[float, float]]:
@@ -178,7 +178,7 @@ def draw(genome: dict, out_path: Path | None = None):
             fontsize=6.5, color=INK_30, fontfamily="monospace",
             ha="left", va="top")
 
-    out_path = out_path or _ROOT / "best_genome.png"
+    out_path = out_path or _ROOT / "web" / "best_genome.png"
     plt.savefig(out_path, dpi=180, bbox_inches="tight", facecolor=BG)
     print(f"Saved: {out_path}")
     plt.show()

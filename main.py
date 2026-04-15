@@ -74,14 +74,15 @@ def train():
         pop = evolve(pop)
 
     root = Path(__file__).parent
+    web = root / "web"
 
     # write the best genome as JSON for the visualiser
-    output_path = root / "best_genome.json"
+    output_path = web / "best_genome.json"
     output_path.write_text(json.dumps({"nodes": best_ever.nodes, "conns": best_ever.conns,
                                 "fitness": best_ever.fitness}, indent=2))
 
     # write the full replay including world config for the browser viewer
-    replay_path = root / "training_replay.json"
+    replay_path = web / "training_replay.json"
     replay_path.write_text(json.dumps({
         "config": {
             "world_width": WORLD_WIDTH, "world_height": WORLD_HEIGHT,

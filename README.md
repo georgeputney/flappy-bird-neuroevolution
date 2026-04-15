@@ -9,6 +9,7 @@ NEAT (Neuroevolution of Augmenting Topologies) implemented from scratch in Pytho
 ```
 neat/        # NEAT algorithm: genome encoding, mutation, crossover, speciation
 game/        # Flappy Bird simulation: bird physics, pipe generation, evaluation
+web/         # Browser replay viewer (index.html + viewer.js)
 main.py      # Training loop, runs evolution and writes output files
 visualise.py # Renders the best genome as a network diagram (matplotlib)
 config.py    # All hyperparameters in one place
@@ -32,7 +33,7 @@ Writes `best_genome.png`.
 ```bash
 python -m http.server 8000
 ```
-Open `http://localhost:8000` to replay the full training run generation by generation.
+Open `http://localhost:8000/web/` to replay the full training run generation by generation.
 
 ## Dependencies
 
