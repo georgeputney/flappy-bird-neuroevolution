@@ -1,0 +1,8 @@
+[project]
+name = "neat-flappy"
+version = "0.1.0"
+description = "Minimal NEAT Flappy Bird"
+requires-python = ">=3.10"
+dependencies = [
+    "matplotlib",
+]

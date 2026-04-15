@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flappy Bird Neuroevolution — Replay Viewer</title>
+<style>
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f7f6f3;
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 32px;
+  }
+
+  .viewer-shell {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #0f172a;
+    box-shadow: 0 4px 32px rgba(14,14,13,0.08);
+    width: 500px;
+  }
+
+  #simCanvas {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 500 / 430;
+    display: block;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: auto auto 10px 10px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: rgba(15, 23, 42, 0.82);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    backdrop-filter: blur(4px);
+    font-size: 11px;
+    color: #e5e7eb;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    pointer-events: none;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: 58px 58px;
+    gap: 2px 14px;
+  }
+
+  .stats .stat-val { color: #f9fafb; }
+
+  .viewer-controls {
+    margin-top: 12px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+  }
+
+  .controls-left {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .controls-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .viewer-controls button {
+    border: none;
+    background: transparent;
+    color: rgba(14,14,13,0.3);
+    padding: 0;
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 200ms ease;
+  }
+  .viewer-controls button:hover { color: rgba(14,14,13,1); }
+
+  #playPauseBtn {
+    color: rgba(14,14,13,1);
+    letter-spacing: 0.16em;
+  }
+
+  .gen-indicator {
+    font-size: 11px;
+    color: rgba(14,14,13,0.3);
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
+
+  .speed-btn {
+    font-size: 11px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: rgba(14,14,13,0.3);
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    transition: color 200ms ease;
+  }
+
+  .speed-btn.active { color: rgba(14,14,13,1); }
+
+  .viewer-footer {
+    font-size: 11px;
+    color: rgba(14,14,13,0.3);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  #errorMessage {
+    font-size: 11px;
+    color: #f87171;
+    margin-top: 6px;
+    white-space: pre-wrap;
+  }
+
+</style>
+</head>
+<body>
+
+  <div>
+    <div class="viewer-shell">
+      <canvas id="simCanvas" width="500" height="430"></canvas>
+      <aside class="overlay">
+        <div class="stats">
+          <div>Gen <span class="stat-val" id="statGeneration">—</span></div>
+          <div>Alive <span class="stat-val" id="statAlive">—</span></div>
+          <div>Best <span class="stat-val" id="statBestGen">—</span></div>
+          <div>Now <span class="stat-val" id="statBestAll">—</span></div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="viewer-controls">
+      <div class="row">
+        <span class="controls-left">
+          <button id="prevGenBtn" type="button">Prev</button>
+          <button id="playPauseBtn" type="button">Play</button>
+          <button id="nextGenBtn" type="button">Next</button>
+        </span>
+        <span id="genIndicator" class="gen-indicator">— / —</span>
+        <span class="controls-right">
+          <button id="speed1x" type="button" class="speed-btn active">1×</button>
+          <button id="speed2x" type="button" class="speed-btn">2×</button>
+          <button id="speed4x" type="button" class="speed-btn">4×</button>
+        </span>
+      </div>
+    </div>
+
+    <p id="status" class="viewer-footer"></p>
+    <p id="errorMessage"></p>
+  </div>
+
+<script src="viewer.js"></script>
+</body>
+</html>
