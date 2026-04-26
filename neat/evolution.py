@@ -58,7 +58,10 @@ def evolve(pop: list[Genome]) -> list[Genome]:
         # allocate offspring proportional to this species' share of total fitness
         n_offspring = max(1, round(sum(g.fitness for g in s) / total_fitness * len(pop)))
 
-        # carry the best genome forward unchanged
+        # Carry the best genome in each species forward unchanged (per-species
+        # elitism). Without this, a lucky high-fitness genome can be mutated away
+        # before the rest of the population catches up, causing fitness to collapse
+        # between generations. Elitism is the main stabiliser against that regression.
         next_population.append(copy.deepcopy(survivors[0]))
 
         # fill the remaining allocation with crossover or cloned mutations

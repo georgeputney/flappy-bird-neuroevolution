@@ -106,6 +106,10 @@ def evaluate(genome, seed: int | None = None, record: bool = False):
         if not alive:
             break
 
-    # heavily weight pipes cleared; use survival frames only as a tiebreaker
+    # Pipes cleared dominate the score, but survival frames are included as an
+    # additive term. In early generations no bird reaches the first pipe, so
+    # "pipes cleared" is uniformly zero and gives the algorithm no gradient to
+    # work with. Counting frames keeps selection pressure alive by rewarding
+    # birds that at least stay airborne longer.
     genome.fitness = float(passed * 100 + step)
     return (genome.fitness, frames) if record else genome.fitness

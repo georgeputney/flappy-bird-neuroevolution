@@ -30,7 +30,11 @@ def train():
     replay_converged = False
 
     for gen in range(GENERATIONS):
-        # evaluate every genome on the same seeded pipe sequence
+        # Seed by generation index rather than a single global seed. A global seed
+        # would let RNG drift across birds because each agent's simulation consumes
+        # a variable number of random calls depending on how long it survives. Seeding
+        # per generation fixes the pipe sequence for the entire cohort and lets the
+        # replay viewer jump directly to any generation without replaying from gen 0.
         for g in pop:
             evaluate(g, seed=gen)
 
